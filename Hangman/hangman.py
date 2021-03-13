@@ -1,12 +1,4 @@
-# Hangman Refactored
-
-# TODO:
-#   --DONE-- Validation of alpha or if nothing is entered
-#   --DONE-- Checking if you've already guessed that letter
-#   --DONE-- If more than one letter was entered
-#   If there are two or more of the same characters, fill them in.
-
-# letter_indexed = self.picked_word.index(letter_guess)
+# Hangman
 
 
 class Hangman:
