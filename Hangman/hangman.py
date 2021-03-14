@@ -21,32 +21,29 @@ class Hangman:
     def update_tries(self):
         self.tries += 1
 
+    def get_indexes(self, letter_input, word):
+        """Find all instances of letter in word and grab their indexes.
+        Append letters to the invisible word indexes so they can be displayed
+        """
+
+        indexed = [
+            index for (index, letter) in enumerate(word) if letter == letter_input
+        ]
+
+        letter_count = indexed.count(letter_input)
+
+        for index in indexed:
+            self.invisible_word[index] = letter_input
+
     def check_letter(self, letter_guess):
         """Check letter guessed, return tuple(Boolean, Output Message)"""
 
         if letter_guess.isalpha() and len(letter_guess) < 2:
-
-            # If the letter has not already been guessed
             if letter_guess not in self.guessed:
-
-                # If the letter is in the word
                 if letter_guess in self.picked_word:
 
-                    # Find all indexes of that letter
-                    indexed = [
-                        index
-                        for (index, letter) in enumerate(self.picked_word)
-                        if letter == letter_guess
-                    ]
+                    self.get_indexes(letter_guess, self.picked_word)
 
-                    # Find out how many indexes there are
-                    letter_count = indexed.count(letter_guess)
-
-                    # Push letters into index of the invisble word.
-                    for index in indexed:
-                        self.invisible_word[index] = letter_guess
-
-                    # Return Boolean and Message if True
                     msg_true = f"\n{letter_guess} is apart of the word."
                     return (True, msg_true)
 
@@ -55,7 +52,6 @@ class Hangman:
                     return (False, msg_false)
             else:
                 return (False, "\nYou've already guessed that letter!")
-
         else:
             input_error = f"\n Your guess needs to be a letter or you've typed too many characters"
             return (False, input_error)
@@ -82,6 +78,7 @@ while play.game_running:
         # Check letter to receive (Boolean, Output Message)
         if check_letter[0]:
             print(check_letter[1])
+            play.guessed.append(user_input)
 
         else:
             play.update_tries()
