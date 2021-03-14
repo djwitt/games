@@ -43,7 +43,6 @@ class Hangman:
                 if letter_guess in self.picked_word:
 
                     self.get_indexes(letter_guess, self.picked_word)
-
                     msg_true = f"\n{letter_guess} is apart of the word."
                     return (True, msg_true)
 
@@ -53,7 +52,9 @@ class Hangman:
             else:
                 return (False, "\nYou've already guessed that letter!")
         else:
-            input_error = f"\n Your guess needs to be a letter or you've typed too many characters"
+            input_error = (
+                f"\n Your guess is not a letter or you've typed too many characters"
+            )
             return (False, input_error)
 
     def full_word(self):
