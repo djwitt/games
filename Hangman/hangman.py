@@ -52,9 +52,8 @@ class Hangman:
             else:
                 return (False, "\nYou've already guessed that letter!")
         else:
-            input_error = (
-                f"\n Your guess is not a letter or you've typed too many characters"
-            )
+            input_error = f"\n Your guess is not a letter or you've \
+                typed too many characters"
             return (False, input_error)
 
     def full_word(self):
