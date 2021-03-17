@@ -38,7 +38,10 @@ class Hangman:
     def check_letter(self, letter_guess):
         """Check letter guessed, return tuple(Boolean, Output Message)"""
 
-        if letter_guess.isalpha() and len(letter_guess) < 2:
+        check_alpha = letter_guess.isalpha()
+        check_guess_length = len(letter_guess) < 2
+
+        if check_alpha and check_guess_length:
             if letter_guess not in self.guessed:
                 if letter_guess in self.picked_word:
 
@@ -46,15 +49,14 @@ class Hangman:
                     msg_true = f"\n{letter_guess} is apart of the word."
                     return (True, msg_true)
 
-                else:
-                    msg_false = f"\n{letter_guess} is not apart of the word."
-                    return (False, msg_false)
-            else:
-                return (False, "\nYou've already guessed that letter!")
-        else:
-            input_error = f"\n Your guess is not a letter or you've \
-                typed too many characters"
-            return (False, input_error)
+                msg_false = f"\n{letter_guess} is not apart of the word."
+                return (False, msg_false)
+
+            return (False, "\nYou've already guessed that letter!")
+
+        input_error = f"\n Your guess is not a letter or you've \
+            typed too many characters"
+        return (False, input_error)
 
     def full_word(self):
         return "".join(letter for letter in self.picked_word)
@@ -73,7 +75,10 @@ while play.game_running:
     user_input = input("Guess a letter: ").upper()
     check_letter = play.check_letter(user_input)
 
-    if play.tries < play.max_tries and play.invisible_word != play.picked_word:
+    check_tries = play.tries < play.max_tries
+    check_invis_word = play.invisible_word != play.picked_word
+
+    if check_tries and check_invis_word:
 
         # Check letter to receive (Boolean, Output Message)
         if check_letter[0]:
