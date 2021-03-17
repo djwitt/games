@@ -49,14 +49,15 @@ class Hangman:
                     msg_true = f"\n{letter_guess} is apart of the word."
                     return (True, msg_true)
 
-                msg_false = f"\n{letter_guess} is not apart of the word."
-                return (False, msg_false)
-
-            return (False, "\nYou've already guessed that letter!")
-
-        input_error = f"\n Your guess is not a letter or you've \
-            typed too many characters"
-        return (False, input_error)
+                else:
+                    msg_false = f"\n{letter_guess} is not apart of the word."
+                    return (False, msg_false)
+            else:
+                return (False, "\nYou've already guessed that letter!")
+        else:
+            input_error = f"\n Your guess is not a letter or you've \
+                typed too many characters"
+            return (False, input_error)
 
     def full_word(self):
         return "".join(letter for letter in self.picked_word)
