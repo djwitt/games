@@ -70,12 +70,13 @@ class Hangman:
     def check_letter(self, letter_guess):
         """Check letter guessed, return tuple(Boolean, Output Message)"""
         checking_condition = self.check_guess_logic(letter_guess)
+        condition_msg = checking_condition[1]
 
         if checking_condition[0]:
             self.get_indexes(letter_guess, self.picked_word)
-            return (True, checking_condition[1])
+            return (True, condition_msg)
         else:
-            return (False, checking_condition[1])
+            return (False, condition_msg)
 
     def full_word(self):
         return "".join(letter for letter in self.picked_word)
