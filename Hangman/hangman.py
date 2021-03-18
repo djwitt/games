@@ -35,29 +35,47 @@ class Hangman:
         for index in indexed:
             self.invisible_word[index] = letter_input
 
+    def check_guess_logic(self, letter):
+        guess_is_alpha = letter.isalpha()
+        guess_length = len(letter) < 2
+        letter_not_in_word = None
+        letter_in_picked_word = None
+
+        # Default state of variable if all conditions are true
+        output_msg = f"\n{letter} is apart of the word."
+
+        # Set all conditions for each variable
+        if letter not in self.guessed:
+            letter_not_in_word = True
+        else:
+            letter_not_in_word = False
+
+        if letter in self.picked_word:
+            letter_in_picked_word = True
+        else:
+            letter_in_picked_word = False
+
+        # Check all logic and if condition is not true, set output message
+        if not guess_is_alpha:
+            output_msg = f"\n Your guess is not a letter"
+        elif not guess_length:
+            output_msg = f"\n Your guess has too many characters"
+        elif not letter_not_in_word:
+            output_msg = f"\n You've already guessed that letter!"
+        elif not letter_in_picked_word:
+            output_msg = f"\n{letter} is not apart of the word."
+
+        return (True, output_msg)
+
     def check_letter(self, letter_guess):
         """Check letter guessed, return tuple(Boolean, Output Message)"""
+        checking_condition = self.check_guess_logic(letter_guess)
 
-        check_alpha = letter_guess.isalpha()
-        check_guess_length = len(letter_guess) < 2
-
-        if check_alpha and check_guess_length:
-            if letter_guess not in self.guessed:
-                if letter_guess in self.picked_word:
-
-                    self.get_indexes(letter_guess, self.picked_word)
-                    msg_true = f"\n{letter_guess} is apart of the word."
-                    return (True, msg_true)
-
-                else:
-                    msg_false = f"\n{letter_guess} is not apart of the word."
-                    return (False, msg_false)
-            else:
-                return (False, "\nYou've already guessed that letter!")
+        if checking_condition[0]:
+            self.get_indexes(letter_guess, self.picked_word)
+            return (True, checking_condition[1])
         else:
-            input_error = f"\n Your guess is not a letter or you've \
-                typed too many characters"
-            return (False, input_error)
+            return (False, checking_condition[1])
 
     def full_word(self):
         return "".join(letter for letter in self.picked_word)
